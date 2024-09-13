@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная страница</title>
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="title">
+            <h1>Выберите Ваш любимый ресторан!</h1>
+            <h2>Среднеземноморская кухня</h2>
+            <a href="index.html" class="back-link">Назад</a>
+        </div>
+
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Поиск Вашего любимого ресторана!">
+        </div>
+
+        <div class="line"></div>
+
+        <div class="Mediterraneans" id="restaurants">
+            <h2>Di Gavi</h2>
+            <img src="img/di-gavi.jpg" alt="Среднеземноморская кухня">
+            <a href="di-gavi.html">Просмотерть</a>
+        </div>
+        
+        <div class="line"></div>
+
+        <div class="Mediterraneans">
+            <h2>Basilic</h2>
+            <img src="img/basilic.jpg">
+            <a href="basilic.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="Mediterraneans">
+            <h2>L'Opera Ristorante</h2>
+            <img src="img/l-opera-ristorante.jpg">
+            <a href=".html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+    </div>    
+
+    <script>
+        // Функция для фильтрации ресторанов
+        function filterRestaurants() {
+            // Получаем значение из поля ввода
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            // Получаем все рестораны
+            var restaurants = document.getElementsByClassName('Mediterraneans');
+            
+            // Проходимся по всем ресторанам и скрываем те, которые не соответствуют запросу
+            for (var i = 0; i < restaurants.length; i++) {
+                var restaurantName = restaurants[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+                if (restaurantName.indexOf(query) > -1) {
+                    restaurants[i].style.display = '';
+                } else {
+                    restaurants[i].style.display = 'none';
+                }
+            }
+        }
+        
+        // Добавляем обработчик события для поля ввода
+        document.getElementById('searchInput').addEventListener('input', filterRestaurants);
+    </script>
+
+</body>
+</html>

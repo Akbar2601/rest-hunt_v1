@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная страница</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">
+            <h1>Выберите Вашу любимую кухню!</h1>
+        </div>
+
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Поиск Вашей любимой кухни">
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen" id="restaurants">
+            <h2>Среднеземноморская кухня</h2>
+            <img src="img/mediterranean.jpg" alt="Среднеземноморская кухня">
+            <a href="Mediterranean.html">Просмотерть</a>
+        </div>
+        
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Японская кухня</h2>
+            <img src="img/japanese.jpg">
+            <a href="Japanese.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Узбекская кухня</h2>
+            <img src="img/uzbek.jpg">
+            <a href="Uzbek.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Индийская кухня</h2>
+            <img src="img/indian.jpg">
+            <a href="indian.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Французкая кухня</h2>
+            <img src="img/french.jpeg">
+            <a href="French.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Итальянская кухня</h2>
+            <img src="img/italian.jpg">
+            <a href="Italian.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Мексиканская кухня</h2>
+            <img src="img/mexican.jpg">
+            <a href="Mexican.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Турецкая кухня</h2>
+            <img src="img/turkey.jpg">
+            <a href="Turkey.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Корейская кухня</h2>
+            <img src="img/korean.jpg">
+            <a href="Korean.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Грузинская кухня</h2>
+            <img src="img/grusian.jpg">
+            <a href="Grusian.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Въетнамская кухня</h2>
+            <img src="img/vietnam.jpeg">
+            <a href="Vietnam.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Тайская кухня</h2>
+            <img src="img/thailand.jpg">
+            <a href="Thailand.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Русская кухня</h2>
+            <img src="img/russian.jpg">
+            <a href="Russian.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="kitchen">
+            <h2>Уйгурская кухня</h2>
+            <img src="img/uygur.jpg">
+            <a href="Uygur.html">Просмотерть</a>
+        </div>
+
+        <div class="line"></div>
+    </div>
+
+    <script>
+        // Функция для фильтрации ресторанов
+        function filterRestaurants() {
+            // Получаем значение из поля ввода
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            // Получаем все рестораны
+            var restaurants = document.getElementsByClassName('kitchen');
+            
+            // Проходимся по всем ресторанам и скрываем те, которые не соответствуют запросу
+            for (var i = 0; i < restaurants.length; i++) {
+                var restaurantName = restaurants[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+                if (restaurantName.indexOf(query) > -1) {
+                    restaurants[i].style.display = '';
+                } else {
+                    restaurants[i].style.display = 'none';
+                }
+            }
+        }
+        
+        // Добавляем обработчик события для поля ввода
+        document.getElementById('searchInput').addEventListener('input', filterRestaurants);
+    </script>
+
+</body>
+</html>

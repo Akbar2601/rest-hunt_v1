@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Di-Gavi</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+    <style>
+        .container {
+            padding: 20px;
+        }
+        .title {
+            margin-bottom: 20px;
+        }
+        .contacts {
+            margin-bottom: 20px;
+        }
+        .line {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.3); /* Полупрозрачный цвет */
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .captcha {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .captcha-input {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Di-Gavi</h1>
+            <h2>Mediterranean kitchen</h2>
+            <a href="Mediterranean.html" class="back-link">Назад</a>
+        </div>
+
+        <div class="contacts">
+            <a href="tel:+998712339905">+998 90 123 45 67</a>
+        </div>
+
+        <div class="line"></div>
+
+        <!-- Форма для бронирования -->
+        <form id="reservation-form">
+            <div class="form-group">
+                <label for="datepicker">Выберите дату:</label>
+                <input type="text" id="datepicker" placeholder="Выберите дату">
+            </div>
+            <div class="form-group">
+                <label for="time">Выберите время:</label>
+                <select id="time">
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" name="phone" placeholder="(99) 999-99-99">
+            </div>
+
+            <!-- CAPTCHA -->
+            <div class="form-group captcha">
+                <label>Введите число:</label>
+                <span id="captcha-number"></span>
+                <input type="text" id="captcha-input" class="captcha-input" placeholder="Число">
+            </div>
+
+            <button type="submit">Забронировать</button>
+        </form>
+    </div>
+
+    <script>
+        // Генерация CAPTCHA
+        function generateCaptcha() {
+            var randomNumber = Math.floor(1000 + Math.random() * 9000); // 4-значное число
+            document.getElementById('captcha-number').textContent = randomNumber;
+            return randomNumber;
+        }
+
+        // Инициализация CAPTCHA
+        var generatedCaptcha = generateCaptcha();
+
+        // JavaScript для отправки данных в Telegram бота
+        document.getElementById('reservation-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var name = document.getElementById('name').value;
+            var phoneNumber = document.getElementById('phone').value;
+            var date = document.getElementById('datepicker').value;
+            var time = document.getElementById('time').value;
+            var enteredCaptcha = document.getElementById('captcha-input').value;
+
+            // Проверка, введена ли правильная CAPTCHA
+            if (enteredCaptcha != generatedCaptcha) {
+                alert('Неправильная CAPTCHA. Попробуйте снова.');
+                generatedCaptcha = generateCaptcha(); // Сгенерировать новую CAPTCHA
+                return;
+            }
+
+            // Проверка номера телефона
+            var cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // Убираем все нецифровые символы
+            if (cleanedPhoneNumber.length !== 9) {
+                alert('Пожалуйста, введите полный номер телефона.');
+                return;
+            }
+
+            var message = "Новое бронирование:\n" + "Имя: " + name + "\nТелефон: +998 " + phoneNumber + "\nДата: " + date + "\nВремя: " + time;
+
+            // Отправка данных в Telegram бота через API
+            fetch('https://api.telegram.org/bot7085365087:AAGNcTiiwnKZV5RF4ZE2ZRcPUkeqJSY2EwU/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: '-4222558596',
+                    text: message
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка отправки сообщения');
+                }
+                alert('Бронирование успешно отправлено!');
+            }).catch(error => {
+                console.error('Ошибка:', error);
+            });
+        });
+
+        // Инициализация Datepicker
+        $(function() {
+            $("#datepicker").datepicker({
+                dateFormat: "dd-mm-yy",
+                minDate: 0
+            });
+        });
+
+        // Применение маски ввода
+        $(document).ready(function() {
+            var mask = "(99) 999-99-99";
+            $("#phone").inputmask(mask, { "placeholder": "(__) ___-__-__" });
+        });
+    </script>
+</body>
+</html>
